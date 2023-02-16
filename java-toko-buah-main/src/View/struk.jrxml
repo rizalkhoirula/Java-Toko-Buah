@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="297" pageHeight="432" columnWidth="257" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" />
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="20"/>
+	<parameter name="no_faktur" class="java.lang.String"/>
+	<parameter name="bayar" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select b.id, substring(b.nama,1,7), dt.qty, b.harga, sum(dt.qty * b.harga), u.nama, t.tanggal, (select sum(dt.qty * b.harga) from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.no_faktur join tb_buah as b on dt.id_buah = b.id join tb_pelanggan as p on t.id_pelanggan = p.id join tb_user as u on dt.id_user = u.id where t.no_faktur = $P{no_faktur} ) as totalH, (select $P{bayar} - sum(dt.qty * b.harga) from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.no_faktur join tb_buah as b on dt.id_buah = b.id join tb_pelanggan as p on t.id_pelanggan = p.id join tb_user as u on dt.id_user = u.id where t.no_faktur = $P{no_faktur} ) as kembalian from tb_detail_transaksi as dt join tb_transaksi as t on dt.id_transaksi = t.no_faktur join tb_buah as b on dt.id_buah = b.id join tb_pelanggan as p on t.id_pelanggan = p.id join tb_user as u on dt.id_user = u.id where t.no_faktur = $P{no_faktur} group by dt.id order by t.tanggal desc;]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="substring(b.nama,1,7)" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="harga" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sum(dt.qty * b.harga)" class="java.math.BigDecimal"/>
+	<field name="nama" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalH" class="java.math.BigDecimal"/>
+	<field name="kembalian" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="71" y="12" width="136" height="28" />
+				<textElement>
+					<font fontName="Cascadia Mono" size="24"/>
+				</textElement>
+				<text><![CDATA[Toko Buah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="39" width="191" height="24" 
+                                />
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[ Jl. Mastrip, Krajan Timur, Sumbersari 68121]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="86" y="0" width="49" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="20" width="42" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{no_faktur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="86" height="20"/>
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[ID Transaksi :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="86" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Kasir        :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="195" y="11" width="62" height="20"/>
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Sub Harga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="11" width="30" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="11" width="43" height="20"/>
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="11" width="16" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[ID Item]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="31" width="257" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="101" y="11" width="47" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Harga]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="0" width="75" height="20"/>
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{substring(b.nama,1,7)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="0" width="62" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum(dt.qty * b.harga)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="0" width="43" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="16" height="20"/>
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="0" width="47" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="69" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="257" height="1" />
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="195" y="8" width="62" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bayar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="28" width="50" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="48" width="62" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kembalian}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="112" y="8" width="83" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Total Bayar :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="28" width="83" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Total Harga :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="48" width="83" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono"/>
+				</textElement>
+				<text><![CDATA[Kembalian   :]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="188" y="8" width="69" height="20" />
+				<textElement>
+					<font fontName="Cascadia Mono" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>
